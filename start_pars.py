@@ -45,6 +45,7 @@ def my_browser_chrome(load_strategy ='normal'):
 
     """Дополнительные настройки"""
     chrome_options.add_argument("--disable-application-cache")
+    chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--disable-infobars")
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--disable-gpu")
