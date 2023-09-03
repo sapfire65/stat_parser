@@ -8,5 +8,5 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./:/usr/workspace
-    command: /bin/sh -c "ls -la && ./python -sv start_pars.py"
+    command: /bin/sh -c "ls -la && ./python -s start_pars.py"
 
