@@ -11,6 +11,6 @@ jobs:
 
       - name: Run-parsing
 
-        run: docker-compose up
+        run: sudo docker-compose up
 
 
