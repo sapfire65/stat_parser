@@ -1,0 +1,17 @@
+name: Start parsing
+
+on: [push]
+
+jobs:
+  Go-pars:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run-parsing
+
+        run: docker-compose up
+
+      - name:
+
