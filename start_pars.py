@@ -30,11 +30,9 @@ def my_browser_chrome(load_strategy ='normal'):
 
 
     """Вариант загрузки драйвера для linux"""
-    # if serv is False:
-    #     print('swith too linux settings')
-    #     servise = Service(executable_path="/usr/bin/chromedriver")
-    #     chrome_options = webdriver.ChromeOptions()
-    #     chrome_options.binary_location = "/usr/bin/chromium-browser"
+    servise = Service(executable_path="/usr/bin/chromedriver")
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.binary_location = "/usr/bin/chromium-browser"
 
     # Опции запуска Chrome webdriver
     chrome_options = webdriver.ChromeOptions()

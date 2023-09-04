@@ -7,8 +7,8 @@ RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositori
 
 # install chromedriver
 
-#RUN apk update && apk upgrade && \
-#    apk add --no-cache chromium chromium-chromedriver
+RUN apk update && apk upgrade && \
+    apk add --no-cache chromium chromium-chromedriver
 #
 ## Копируем ChromeDriver в /usr/bin/
 #RUN cp /usr/lib/chromium/chromedriver /usr/bin/
