@@ -14,6 +14,7 @@ RUN apk add curl unzip
 RUN curl -O https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chrome-linux64.zip
 RUN ls -l
 RUN unzip chrome-linux64.zip
+RUN ls -l /usr/local/bin/
 RUN mv chromedriver /usr/local/bin/
 
 
