@@ -23,7 +23,8 @@ def my_browser_chrome(load_strategy ='normal'):
     # loads Chrome webdriver 114.0.5735.90
     # servise = Service(executable_path=ChromeDriverManager(driver_version='114.0.5735.90').install())
 
-    servise = Service(executable_path=ChromeDriverManager().install())
+    # servise = Service(executable_path=ChromeDriverManager().install())
+    servise = Service(ChromeDriverManager(driver_version='116.0.5845.141').install())
 
     # Опции запуска Chrome webdriver
     chrome_options = webdriver.ChromeOptions()
