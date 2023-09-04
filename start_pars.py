@@ -25,9 +25,12 @@ def my_browser_chrome(load_strategy ='normal'):
 
     # servise = Service(executable_path=ChromeDriverManager().install())
     servise = Service(executable_path=ChromeDriverManager().install())
+    serv = servise
+    serv = bool(serv)
 
     """Вариант загрузки драйвера для linux"""
-    if not servise:
+    if serv is False:
+        print('swith too linux settings')
         servise = Service(executable_path="/usr/bin/chromedriver")
         chrome_options = webdriver.ChromeOptions()
         chrome_options.binary_location = "/usr/bin/chromium-browser"
