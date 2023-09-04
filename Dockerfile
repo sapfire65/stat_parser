@@ -7,14 +7,14 @@ RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositori
 
 # install chromedriver
 
-RUN apk update && apk upgrade && \
-    apk add --no-cache chromium chromium-chromedriver
-
-# Копируем ChromeDriver в /usr/bin/
-RUN cp /usr/lib/chromium/chromedriver /usr/bin/
-
-# Устанавливаем переменную среды для Selenium
-ENV PATH="/usr/bin/chromium-browser:${PATH}"
+#RUN apk update && apk upgrade && \
+#    apk add --no-cache chromium chromium-chromedriver
+#
+## Копируем ChromeDriver в /usr/bin/
+#RUN cp /usr/lib/chromium/chromedriver /usr/bin/
+#
+## Устанавливаем переменную среды для Selenium
+#ENV PATH="/usr/bin/chromium-browser:${PATH}"
 
 
 
