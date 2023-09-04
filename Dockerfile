@@ -15,7 +15,8 @@ RUN curl -O https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.58
 RUN ls -l
 RUN unzip chrome-linux64.zip
 RUN ls -l /usr/local/bin/
-RUN mv chromedriver /usr/local/bin/
+#mv chromedriver /usr/local/bin/
+RUN mv chromedriver /usr/bin//
 
 
 
