@@ -11,10 +11,10 @@ RUN apk update && apk upgrade && \
     apk add --no-cache chromium chromium-chromedriver
 
 # Копируем ChromeDriver в /usr/bin/
-RUN cp /usr/lib/chromium/chromedriver /usr/bin/sh
+RUN cp /usr/lib/chromium/chromedriver /usr/bin/
 
-# Указываем путь к браузеру Chromium
-ENV PATH="/usr/bin/sh/chromium-browser:${PATH}"
+# Устанавливаем переменную среды для Selenium
+ENV PATH="/usr/bin/chromium-browser:${PATH}"
 
 
 

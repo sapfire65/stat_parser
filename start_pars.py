@@ -8,6 +8,7 @@ import urllib.parse
 from requests import request
 from time import sleep
 from user_agent import generate_user_agent
+import selenium
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -23,10 +24,10 @@ def my_browser_chrome(load_strategy ='normal'):
     # loads Chrome webdriver 114.0.5735.90
     # servise = Service(executable_path=ChromeDriverManager(driver_version='114.0.5735.90').install())
 
-    # servise = Service(executable_path=ChromeDriverManager().install())
     servise = Service(executable_path=ChromeDriverManager().install())
-    serv = servise
-    serv = bool(serv)
+
+
+
 
     """Вариант загрузки драйвера для linux"""
     # if serv is False:
