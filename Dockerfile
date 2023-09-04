@@ -17,7 +17,7 @@ RUN unzip chrome-linux64.zip
 RUN ls -l
 RUN ls -l /usr/local/bin/
 #mv chromedriver /usr/local/bin/
-RUN mv chromedriver /usr/bin/
+RUN mv chrome-linux64 /usr/local/bin/
 
 
 
