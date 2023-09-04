@@ -11,7 +11,7 @@ RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositori
 
 RUN apk update && apk upgrade && \
     apk add --no-cache chromium chromium-chromedriver \
-RUN ls -l
+    ls -l
 
 
 #RUN apk update
