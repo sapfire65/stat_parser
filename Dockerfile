@@ -10,10 +10,11 @@ RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositori
 #RUN apk add --no-cache chromium chromium-chromedriver tzdata
 
 RUN apk update && \
-    apk add curl unzip \
-    curl -O https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chrome-linux64.zip \
-    unzip chrome-linux64.zip \
+    apk add curl unzip && \
+    curl -O https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chrome-linux64.zip && \
+    unzip chrome-linux64.zip && \
     mv chromedriver /usr/local/bin/
+
 
 
 
