@@ -1,4 +1,3 @@
 .idea
 *.iml
 .venv
-data.pickle
