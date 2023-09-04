@@ -6,14 +6,15 @@ RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositori
     echo "https://dl-4.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories
 
 # install chromedriver
-#RUN apk update
-#RUN apk add --no-cache chromium chromium-chromedriver tzdata
 
 RUN apk update && apk upgrade && \
     apk add --no-cache chromium chromium-chromedriver
 
-RUN ls -l
-RUN mv chrome-linux64 /bin/sh
+# Копируем ChromeDriver в /usr/bin/
+RUN cp /usr/lib/chromium/chromedriver /usr/bin/
+
+# Указываем путь к браузеру Chromium
+ENV PATH="/usr/bin/chromium-browser:${PATH}"
 
 
 
