@@ -6,8 +6,17 @@ RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositori
     echo "https://dl-4.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories
 
 # install chromedriver
-RUN apk update
-RUN apk add --no-cache chromium chromium-chromedriver tzdata
+#RUN apk update
+#RUN apk add --no-cache chromium chromium-chromedriver tzdata
+
+RUN apk update && \
+    apk add curl unzip \
+    curl -O https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chrome-linux64.zip \
+    unzip chrome-linux64.zip \
+    mv chromedriver /usr/local/bin/
+
+
+
 
 # Get all the prereqs
 RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
