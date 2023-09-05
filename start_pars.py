@@ -24,16 +24,16 @@ def my_browser_chrome(load_strategy ='normal'):
     # loads Chrome webdriver 114.0.5735.90
     # servise = Service(executable_path=ChromeDriverManager(driver_version='114.0.5735.90').install())
 
-    os_name = os.name
-    if os_name == 'nt':
-        servise = Service(executable_path=ChromeDriverManager().install())
-    else:
-        """Вариант загрузки драйвера для linux"""
-        servise = Service(executable_path="/usr/bin/chromedriver")
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.binary_location = "/usr/bin/chromium-browser"
+    # os_name = os.name
+    # if os_name == 'nt':
+    #     servise = Service(executable_path=ChromeDriverManager().install())
+    # else:
+    #     """Вариант загрузки драйвера для linux"""
+    #     servise = Service(executable_path="/usr/bin/chromedriver")
+    #     chrome_options = webdriver.ChromeOptions()
+    #     chrome_options.binary_location = "/usr/bin/chromium-browser"
 
-
+    servise = Service(executable_path=ChromeDriverManager().install())
     # Опции запуска Chrome webdriver
     chrome_options = webdriver.ChromeOptions()
 
