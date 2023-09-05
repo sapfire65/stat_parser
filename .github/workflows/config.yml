@@ -1,6 +1,6 @@
 name: Start parsing
 
-on: [push]
+on: workflow_dispatch
 
 jobs:
   Go-pars:
