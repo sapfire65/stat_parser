@@ -1,3 +1,4 @@
+# Welcome to my first parser :)
 # -*- coding: utf-8 -*-
 import copy
 import pickle
@@ -5,7 +6,6 @@ from datetime import datetime as DT
 import os
 import re
 import urllib.parse
-from requests import request
 from time import sleep
 from user_agent import generate_user_agent
 import selenium
@@ -71,8 +71,6 @@ def my_browser_chrome(load_strategy ='normal'):
 
 
     chrome_browser = webdriver.Chrome(options=chrome_options, service=servise)
-
-
     print(f'\n{Fore.GREEN}user-agent: {ua_string} {Style.RESET_ALL}\n')
 
     return chrome_browser
@@ -117,13 +115,13 @@ class Parsing:
 
 
     def pars_text_and_clear(self):
+        """Парсит страницу и регуляркой очищает до нужных данных"""
         responce = self.browser.page_source
         text = urllib.parse.unquote(responce).encode('utf-8')
         text = text.decode('utf-8')
 
-        # Очищаем страницу. Берем только заголовки объявлений
+        # Очищаем страницу. Берем только тикеры
         clear_text = re.findall(r'homesymbol">(.*?)</small>', text)
-
         return clear_text
 
 
@@ -159,7 +157,6 @@ class Parsing:
             self.start_parsing()
 
         pars_tuple = set(self.my_list)
-
         return pars_tuple
 
 
@@ -231,6 +228,23 @@ class Parsing:
         main()
 
 
+# class Git:
+#     def git_push_with_ssh_key(self):
+#         try:
+#             # Укажите путь к вашему репозиторию
+#             repo_path = 'https://github.com/sapfire65/stat_parser/'
+#             repo = git.Repo(repo_path)
+#
+#             # Установите переменную окружения GIT_SSH_COMMAND для указания вашего ключа SSH
+#             ssh_key_path = 'SSH_KEY'
+#             os.environ['GIT_SSH_COMMAND'] = f'ssh -i {ssh_key_path}'
+#
+#             # Выполняем git push
+#             repo.remotes.origin.push()
+#
+#             print("Git push успешно выполнен с использованием SSH-ключа")
+#         except Exception as e:
+#             print(f"Произошла ошибка: {e}")
 
 
 
@@ -239,8 +253,9 @@ go = Parsing()
 go.go_too_page()
 go.swith_too_100()
 
-
 go.start_parsing()
 go.work_start()
 
+# go_git = Git()
+# go_git.git_push_with_ssh_key()
 
