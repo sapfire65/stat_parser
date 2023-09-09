@@ -29,6 +29,7 @@ RUN set -eux; \
 #RUN apk update && apk upgrade && \
 #    apk add --no-cache chromium chromium-chromedriver
 
+
 # Создаем файл сценария для установки
 RUN echo '#!/bin/sh' > /install.sh && \
     echo 'sed -i -e "s|dl-cdn.alpinelinux.org|$1|g" /etc/apk/repositories' >> /install.sh && \
@@ -38,28 +39,7 @@ RUN echo '#!/bin/sh' > /install.sh && \
     chmod +x /install.sh
 
 # Вызываем сценарий с двумя зеркальными серверами
-RUN /install.sh https://dl-4.alpinelinux.org || /install.sh https://dl-cdn.alpinelinux.org
-
-
-
-#
-## Копируем ChromeDriver в /usr/bin/
-#RUN cp /usr/lib/chromium/chromedriver /usr/bin/
-#
-## Устанавливаем переменную среды для Selenium
-#ENV PATH="/usr/bin/chromium-browser:${PATH}"
-
-
-#RUN apk update
-#RUN apk add curl unzip
-#RUN curl -O https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chrome-linux64.zip
-#RUN ls -l
-#RUN unzip chrome-linux64.zip
-#RUN ls -l
-#RUN ls -l /usr/local/bin/
-##mv chromedriver /usr/local/bin/
-#RUN mv chrome-linux64 /usr/bin/
-
+RUN /install.sh $MIRROR_1 || /install.sh $MIRROR_2
 
 
 # Get all the prereqs
