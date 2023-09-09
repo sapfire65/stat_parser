@@ -6,6 +6,10 @@ RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositori
     echo "https://dl-4.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories && \
     echo "http://mirror.yandex.ru/mirrors/alpine/v3.10/main" >> /etc/apk/repositories && \
     echo "http://mirror.clarkson.edu/alpine/v3.10/main" >> /etc/apk/repositories && \
+    echo "http://mirror1.hs-esslingen.de/pub/Mirrors/alpine/v3.10/main" >> /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v3.17/main" >> /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v3.17/community" >> /etc/apk/repositories && \
+    echo "http://mirror.yandex.ru/mirrors/alpine/v3.10/main" >> /etc/apk/repositories && \
     echo "http://mirror1.hs-esslingen.de/pub/Mirrors/alpine/v3.10/main" >> /etc/apk/repositories
 
 
