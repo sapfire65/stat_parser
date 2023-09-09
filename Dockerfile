@@ -7,8 +7,24 @@ RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositori
 
 # install chromedriver
 
-RUN apk update && apk upgrade && \
-    apk add --no-cache chromium chromium-chromedriver
+#RUN apk update && apk upgrade && \
+#    apk add --no-cache chromium chromium-chromedriver
+
+# Устанавливаем переменные с зеркальными ссылками
+ENV MIRROR_1="https://dl-4.alpinelinux.org"
+ENV MIRROR_2="https://dl-cdn.alpinelinux.org"
+
+# Создаем функцию для попытки установки
+RUN install_with_mirror() { \
+    sed -i -e "s|dl-cdn.alpinelinux.org|$1|g" /etc/apk/repositories && \
+    apk update && apk upgrade && \
+    apk add --no-cache chromium chromium-chromedriver; \
+}
+
+# Попробуем с первой зеркальной ссылкой, затем со второй
+RUN install_with_mirror $MIRROR_1 || install_with_mirror $MIRROR_2
+
+
 #
 ## Копируем ChromeDriver в /usr/bin/
 #RUN cp /usr/lib/chromium/chromedriver /usr/bin/
@@ -34,9 +50,6 @@ RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/s
 RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.30-r0/glibc-2.30-r0.apk
 RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.30-r0/glibc-bin-2.30-r0.apk
 
-#RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
-#RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r1/glibc-2.35-r1.apk
-#RUN apk add glibc-2.35-r1.apk
 
 #RUN apk update && \
 #    apk add openjdk11-jre curl tar && \
