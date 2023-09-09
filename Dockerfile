@@ -12,20 +12,9 @@ RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositori
 
 # install chromedriver
 
-#RUN apk update && apk upgrade && \
-#    apk add --no-cache chromium chromium-chromedriver
+RUN apk update && apk upgrade && \
+    apk add --no-cache chromium chromium-chromedriver
 
-
-# Создаем файл сценария для установки
-RUN echo '#!/bin/sh' > /install.sh && \
-    echo 'sed -i -e "s|dl-cdn.alpinelinux.org|$1|g" /etc/apk/repositories' >> /install.sh && \
-    echo 'apk update' >> /install.sh && \
-    echo 'apk upgrade' >> /install.sh && \
-    echo 'apk add --no-cache chromium chromium-chromedriver' >> /install.sh && \
-    chmod +x /install.sh
-
-# Вызываем сценарий с двумя зеркальными серверами
-RUN /install.sh $MIRROR_1 || /install.sh $MIRROR_2
 
 
 # Get all the prereqs
