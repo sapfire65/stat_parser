@@ -10,19 +10,17 @@ RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositori
 #RUN apk update && apk upgrade && \
 #    apk add --no-cache chromium chromium-chromedriver
 
-# Устанавливаем переменные с зеркальными ссылками
-ENV MIRROR_1="https://dl-4.alpinelinux.org"
-ENV MIRROR_2="https://dl-cdn.alpinelinux.org"
+# Создаем файл сценария для установки
+RUN echo '#!/bin/sh' > /install.sh && \
+    echo 'sed -i -e "s|dl-cdn.alpinelinux.org|$1|g" /etc/apk/repositories' >> /install.sh && \
+    echo 'apk update' >> /install.sh && \
+    echo 'apk upgrade' >> /install.sh && \
+    echo 'apk add --no-cache chromium chromium-chromedriver' >> /install.sh && \
+    chmod +x /install.sh
 
-# Создаем функцию для попытки установки
-RUN install_with_mirror() { \
-    sed -i -e "s|dl-cdn.alpinelinux.org|$1|g" /etc/apk/repositories && \
-    apk update && apk upgrade && \
-    apk add --no-cache chromium chromium-chromedriver; \
-}
+# Вызываем сценарий с двумя зеркальными серверами
+RUN /install.sh https://dl-4.alpinelinux.org || /install.sh https://dl-cdn.alpinelinux.org
 
-# Попробуем с первой зеркальной ссылкой, затем со второй
-RUN install_with_mirror $MIRROR_1 || install_with_mirror $MIRROR_2
 
 
 #
