@@ -2,8 +2,24 @@
 FROM python:3.12-rc-alpine3.17
 
 # update apk repositories
-RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositories && \
-    echo "https://dl-4.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories
+#RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositories && \
+#    echo "https://dl-4.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories
+
+# Устанавливаем переменные с зеркальными ссылками
+ENV MIRROR_1="http://mirror.yandex.ru/mirrors/alpine/v3.10/main"
+ENV MIRROR_2="http://mirror.clarkson.edu/alpine/v3.10/main"
+ENV MIRROR_3="http://mirror1.hs-esslingen.de/pub/Mirrors/alpine/v3.10/main"
+
+# Создаем функцию для попытки установки
+RUN install_with_mirror() { \
+    sed -i -e "s|dl-cdn.alpinelinux.org|$1|g" /etc/apk/repositories && \
+    apk update && apk upgrade && \
+    apk add --no-cache chromium chromium-chromedriver; \
+}
+
+# Попробуем с первой зеркальной ссылкой, затем со второй, затем с третьей
+RUN install_with_mirror $MIRROR_1 || install_with_mirror $MIRROR_2 || install_with_mirror $MIRROR_3
+
 
 # install chromedriver
 
