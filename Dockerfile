@@ -11,15 +11,17 @@ ENV MIRROR_2="http://mirror.clarkson.edu/alpine/v3.10/main"
 ENV MIRROR_3="http://mirror1.hs-esslingen.de/pub/Mirrors/alpine/v3.10/main"
 
 # Обновляем ссылки на зеркальные серверы и устанавливаем пакеты
-RUN sed -i -e "s|dl-cdn.alpinelinux.org|$MIRROR_1|g" /etc/apk/repositories && \
+RUN set -eux; \
+    sed -i -e "s|dl-cdn.alpinelinux.org|$MIRROR_1|g" /etc/apk/repositories && \
     apk update && apk upgrade && \
-    apk add --no-cache chromium chromium-chromedriver || \
+    apk add --no-cache chromium chromium-chromedriver || true; \
     sed -i -e "s|dl-cdn.alpinelinux.org|$MIRROR_2|g" /etc/apk/repositories && \
     apk update && apk upgrade && \
-    apk add --no-cache chromium chromium-chromedriver || \
+    apk add --no-cache chromium chromium-chromedriver || true; \
     sed -i -e "s|dl-cdn.alpinelinux.org|$MIRROR_3|g" /etc/apk/repositories && \
     apk update && apk upgrade && \
-    apk add --no-cache chromium chromium-chromedriver
+    apk add --no-cache chromium chromium-chromedriver || true
+
 
 
 # install chromedriver
