@@ -2,25 +2,11 @@
 FROM python:3.12-rc-alpine3.17
 
 # update apk repositories
-#RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositories && \
-#    echo "https://dl-4.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories
-
-# Устанавливаем переменные с зеркальными ссылками
-ENV MIRROR_1="http://mirror.yandex.ru/mirrors/alpine/v3.10/main"
-ENV MIRROR_2="http://mirror.clarkson.edu/alpine/v3.10/main"
-ENV MIRROR_3="http://mirror1.hs-esslingen.de/pub/Mirrors/alpine/v3.10/main"
-
-# Обновляем ссылки на зеркальные серверы и устанавливаем пакеты
-RUN set -eux; \
-    sed -i -e "s|dl-cdn.alpinelinux.org|$MIRROR_1|g" /etc/apk/repositories && \
-    apk update && apk upgrade && \
-    apk add --no-cache chromium chromium-chromedriver || true; \
-    sed -i -e "s|dl-cdn.alpinelinux.org|$MIRROR_2|g" /etc/apk/repositories && \
-    apk update && apk upgrade && \
-    apk add --no-cache chromium chromium-chromedriver || true; \
-    sed -i -e "s|dl-cdn.alpinelinux.org|$MIRROR_3|g" /etc/apk/repositories && \
-    apk update && apk upgrade && \
-    apk add --no-cache chromium chromium-chromedriver || true
+RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositories && \
+    echo "https://dl-4.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories && \
+    echo "http://mirror.yandex.ru/mirrors/alpine/v3.10/main" >> /etc/apk/repositories && \
+    echo "http://mirror.clarkson.edu/alpine/v3.10/main" >> /etc/apk/repositories && \
+    echo "http://mirror1.hs-esslingen.de/pub/Mirrors/alpine/v3.10/main" >> /etc/apk/repositories && \
 
 
 
