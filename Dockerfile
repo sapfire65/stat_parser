@@ -23,7 +23,7 @@ RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.30-r0/
 # install chromedriver
 RUN apk update &&  \
     apk upgrade && \
-    apk add --no-cache chromium chromium-chromedriver \
+    apk add --no-cache chromium chromium-chromedriver
 
 RUN pip install add --no-cache --upgrade pip
 
