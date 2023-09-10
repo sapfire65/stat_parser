@@ -42,4 +42,3 @@ COPY ./requirements.txt /usr/workspace
 
 # install Python dependencies
 RUN pip3 install -r requirements.txt
-RUN ruff check
