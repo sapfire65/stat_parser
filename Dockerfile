@@ -26,8 +26,6 @@ RUN apk update &&  \
     apk upgrade && \
     apk add --no-cache chromium chromium-chromedriver
 
-RUN pip install add --no-cache --upgrade pip
-
 
 
 #RUN apk update && \
