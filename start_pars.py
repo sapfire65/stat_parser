@@ -8,12 +8,12 @@ import re
 import urllib.parse
 from time import sleep
 from user_agent import generate_user_agent
-import selenium
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait as My_DriverWait
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import  TimeoutException
 from webdriver_manager.chrome import ChromeDriverManager
 from colorama import Fore, Style
 
@@ -35,7 +35,7 @@ def my_browser_chrome(load_strategy ='normal'):
 
 
     # Опции запуска Chrome webdriver
-    chrome_options = webdriver.ChromeOptions()
+    chrome_options = Options()
 
     # chrome_options.page_load_strategy = 'normal'
     chrome_options.page_load_strategy = load_strategy
@@ -70,7 +70,7 @@ def my_browser_chrome(load_strategy ='normal'):
     chrome_options.add_argument('--headless')
 
 
-    chrome_browser = webdriver.Chrome(options=chrome_options, service=servise)
+    chrome_browser = webdriver.Chrome(options=chrome_options, service=servise)  # noqa: F821
     print(f'\n{Fore.GREEN}user-agent: {ua_string} {Style.RESET_ALL}\n')
 
     return chrome_browser
@@ -131,7 +131,6 @@ class Parsing:
         element = self.find(locator,  'Смена количества монет на странице не отображается')
         element.click()
         sleep(1)
-
         element_100 = self.find(locator_100,  'Не отображается выбор - 100')
         element_100.click()
         self.go_too_element(locator)
@@ -155,7 +154,6 @@ class Parsing:
 
         if copy_last_on_the_list != last_on_the_list:
             self.start_parsing()
-
         pars_tuple = set(self.my_list)
         return pars_tuple
 
@@ -202,7 +200,6 @@ class Parsing:
                     print(f'{Fore.GREEN}ВНИМАНИЕ НОВЫЕ ТИКЕРЫ!{Style.RESET_ALL}')
                     for i in range(count_elements_in_list):
                         print(f'{list_status[i]} \n')
-
                     #  Перезапись новой информации в файл
                     write_data_to_file(file_path, new_data)
                     print(f'>>{Fore.YELLOW}Update complete{Style.RESET_ALL}')
