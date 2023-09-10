@@ -4,7 +4,7 @@ FROM python:3.12.0a4-alpine3.17
 
 # update apk repositories
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/v3.17/main" >> /etc/apk/repositories; \
-    echo "https://dl-cdn.alpinelinux.org/alpine/v3.17/community" >> /etc/apk/repositories; \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v3.17/community" >> /etc/apk/repositories
 #    echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositories; \
 #    echo "https://dl-4.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories; \
 
