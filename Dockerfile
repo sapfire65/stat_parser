@@ -3,15 +3,16 @@ FROM python:3.12.0a4-alpine3.17
 #FROM python:3.12-rc-alpine3.17
 
 # update apk repositories
-RUN echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositories; \
-    echo "https://dl-4.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories; \
-    echo "https://dl-cdn.alpinelinux.org/alpine/v3.17/main" >> /etc/apk/repositories; \
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/v3.17/main" >> /etc/apk/repositories; \
     echo "https://dl-cdn.alpinelinux.org/alpine/v3.17/community" >> /etc/apk/repositories; \
-    echo "http://mirror.yandex.ru/mirrors/alpine/v3.10/main" >> /etc/apk/repositories; \
-    echo "http://mirror.clarkson.edu/alpine/v3.10/main" >> /etc/apk/repositories; \
-    echo "http://mirror1.hs-esslingen.de/pub/Mirrors/alpine/v3.10/main" >> /etc/apk/repositories; \
-    echo "http://mirror.yandex.ru/mirrors/alpine/v3.10/main" >> /etc/apk/repositories; \
-    echo "http://mirror1.hs-esslingen.de/pub/Mirrors/alpine/v3.10/main" >> /etc/apk/repositories
+#    echo "https://dl-4.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositories; \
+#    echo "https://dl-4.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories; \
+
+#    echo "http://mirror.yandex.ru/mirrors/alpine/v3.10/main" >> /etc/apk/repositories; \
+#    echo "http://mirror.clarkson.edu/alpine/v3.10/main" >> /etc/apk/repositories; \
+#    echo "http://mirror1.hs-esslingen.de/pub/Mirrors/alpine/v3.10/main" >> /etc/apk/repositories; \
+#    echo "http://mirror.yandex.ru/mirrors/alpine/v3.10/main" >> /etc/apk/repositories; \
+#    echo "http://mirror1.hs-esslingen.de/pub/Mirrors/alpine/v3.10/main" >> /etc/apk/repositories
 
 # Вспомогательный набор библиотек
 RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
