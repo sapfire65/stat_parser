@@ -24,7 +24,7 @@ p/s Данные  data.pickle не обновляются потому что н
 ### Дата записи файла adta.pickle: 2023-09-05 22:11:47
 
 Projekt import:
-copy / pickle / datetime / os / re / urllib.parse / time / user_agent / selenium / 
+copy / pickle / datetime / os / re / .parse / time / user_agent / selenium / 
 webdriver_manager / colorama 
 
 tg: https://t.me/Zontiq
