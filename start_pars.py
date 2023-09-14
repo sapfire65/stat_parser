@@ -1,12 +1,14 @@
 # Welcome to my first parser :)
 # -*- coding: utf-8 -*-
 import copy
-import pickle
-from datetime import datetime as DT
+import pickle  #  Преобразование /восстановления - объектов Python в байтовые потоки
 import os
 import re
-import urllib.parse
+import urllib.parse  #  percent-encoding - принимает закодированную строку в качестве входного аргумента и возвращает декодированную версию этой строки.
 from time import sleep
+from datetime import datetime as DT
+
+import requests
 from user_agent import generate_user_agent
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
@@ -76,87 +78,98 @@ def my_browser_chrome(load_strategy ='normal'):
     return chrome_browser
 
 class Parsing:
-    URL = 'https://miningpoolstats.stream/#'
-    COINS_NEXT = '//li[@id="coins_next"]/a[@aria-controls="coins"]'
-    LAST_NUBER_COINS = '(//span[@class="homenr"])[last()]'
-    my_list = []
+    JS_URL = 'https://miningpoolstats.stream/data/coin_list.19.min.js'
+    # my_list = []
 
-    def __init__(self):
-        self.browser = my_browser_chrome()
-
-    def go_too_page(self):
-        self.browser.get(self.URL)
+    # URL = 'https://miningpoolstats.stream/#'
+    # COINS_NEXT = '//li[@id="coins_next"]/a[@aria-controls="coins"]'
+    # LAST_NUBER_COINS = '(//span[@class="homenr"])[last()]'
 
 
-    def find(self,
-            locator,
-            exeptions_text = 'Елемент не найден'):
+    # def __init__(self):
+    #     self.browser = my_browser_chrome()
 
-        """Поиск элемента на странице
-
-        :param locator: (str) локатор
-        :param exeptions_text: (str) текст исключения
-        """
-        try:
-            element = My_DriverWait(self.browser, 15, 1).until(EC.visibility_of_element_located(('xpath', locator)))
-            return element
-
-        except TimeoutException:
-            print(exeptions_text)
+    # def go_too_page(self):
+    #     self.browser.get(self.URL)
 
 
-    def go_too_element(self, element):
-        """Перемещает фокус к элементу
+    # def find(self,
+    #         locator,
+    #         exeptions_text = 'Елемент не найден'):
+    #
+    #     """Поиск элемента на странице
+    #
+    #     :param locator: (str) локатор
+    #     :param exeptions_text: (str) текст исключения
+    #     """
+    #     try:
+    #         element = My_DriverWait(self.browser, 15, 1).until(EC.visibility_of_element_located(('xpath', locator)))
+    #         return element
+    #
+    #     except TimeoutException:
+    #         print(exeptions_text)
+    #
+    #
+    # def go_too_element(self, element):
+    #     """Перемещает фокус к элементу
+    #
+    #     :param element: (str) принимает локатор
+    #     """
+    #     elem = self.find(element,  'Перемещение к обьекту невозможно, елемент не видно')
+    #     self.browser.execute_script("return arguments[0].scrollIntoView();", elem)
+    #
+    #
+    # def pars_text_and_clear(self):
+    #     """Парсит страницу и регуляркой очищает до нужных данных"""
+    #     responce = self.browser.page_source
+    #     text = urllib.parse.unquote(responce).encode('utf-8')
+    #     text = text.decode('utf-8')
+    #
+    #     # Очищаем страницу. Берем только тикеры
+    #     clear_text = re.findall(r'homesymbol">(.*?)</small>', text)
+    #     return clear_text
+    #
+    #
+    # def swith_too_100(self):
+    #     locator = '//select[@class="form-control input-sm"]'
+    #     locator_100 =  '(//select[@class="form-control input-sm"]/child::*)[3]'
+    #     element = self.find(locator,  'Смена количества монет на странице не отображается')
+    #     element.click()
+    #     sleep(1)
+    #     element_100 = self.find(locator_100,  'Не отображается выбор - 100')
+    #     element_100.click()
+    #     self.go_too_element(locator)
+    #     sleep(1)
+    #
+    # def start_parsing(self):
+    #
+    #     last_on_the_list = self.browser.find_element('xpath', self.LAST_NUBER_COINS).text
+    #     # last_on_the_list = int(float(last_on_the_list))
+    #     copy_last_on_the_list = copy.deepcopy(last_on_the_list)
+    #
+    #     count = len(self.pars_text_and_clear())
+    #     for i in range(count):
+    #         self.my_list.append(self.pars_text_and_clear()[i])
+    #
+    #     obj = self.find(self.COINS_NEXT, 'Кнопка не отобразилась')
+    #     self.go_too_element(self.COINS_NEXT)
+    #     obj.click()
+    #     # sleep(1)
+    #     last_on_the_list = self.browser.find_element('xpath', self.LAST_NUBER_COINS).text
+    #
+    #     if copy_last_on_the_list != last_on_the_list:
+    #         self.start_parsing()
+    #     pars_tuple = set(self.my_list)
+    #     return pars_tuple
 
-        :param element: (str) принимает локатор
-        """
-        elem = self.find(element,  'Перемещение к обьекту невозможно, елемент не видно')
-        self.browser.execute_script("return arguments[0].scrollIntoView();", elem)
-
-
-    def pars_text_and_clear(self):
-        """Парсит страницу и регуляркой очищает до нужных данных"""
-        responce = self.browser.page_source
-        text = urllib.parse.unquote(responce).encode('utf-8')
-        text = text.decode('utf-8')
-
-        # Очищаем страницу. Берем только тикеры
-        clear_text = re.findall(r'homesymbol">(.*?)</small>', text)
+    def pars_js_file(self):
+        responce = requests.get(self.JS_URL).text
+        clear_text = re.findall(r'{"n":"(.*?)","s"', responce)
+        clear_text = set(clear_text)
+        # print(responce)
+        # print(clear_text)
+        # print(len(clear_text))
         return clear_text
-
-
-    def swith_too_100(self):
-        locator = '//select[@class="form-control input-sm"]'
-        locator_100 =  '(//select[@class="form-control input-sm"]/child::*)[3]'
-        element = self.find(locator,  'Смена количества монет на странице не отображается')
-        element.click()
-        sleep(1)
-        element_100 = self.find(locator_100,  'Не отображается выбор - 100')
-        element_100.click()
-        self.go_too_element(locator)
-        sleep(1)
-
-    def start_parsing(self):
-
-        last_on_the_list = self.browser.find_element('xpath', self.LAST_NUBER_COINS).text
-        # last_on_the_list = int(float(last_on_the_list))
-        copy_last_on_the_list = copy.deepcopy(last_on_the_list)
-
-        count = len(self.pars_text_and_clear())
-        for i in range(count):
-            self.my_list.append(self.pars_text_and_clear()[i])
-
-        obj = self.find(self.COINS_NEXT, 'Кнопка не отобразилась')
-        self.go_too_element(self.COINS_NEXT)
-        obj.click()
-        # sleep(1)
-        last_on_the_list = self.browser.find_element('xpath', self.LAST_NUBER_COINS).text
-
-        if copy_last_on_the_list != last_on_the_list:
-            self.start_parsing()
-        pars_tuple = set(self.my_list)
-        return pars_tuple
-
 
     def work_start(self):
 
@@ -169,7 +182,8 @@ class Parsing:
             old_time = re.sub(r"\.\d+", "", data_and_time)
 
             # Множество данных который спарсили с сайта
-            data = self.start_parsing()
+            # data = self.start_parsing()
+            data = self.pars_js_file()
             # data = {'Новый СУПЕР БИТКОИН'}
 
 
@@ -225,6 +239,7 @@ class Parsing:
         main()
 
 
+
 # class Git:
 #     def git_push_with_ssh_key(self):
 #         try:
@@ -247,12 +262,11 @@ class Parsing:
 
 
 go = Parsing()
-go.go_too_page()
-go.swith_too_100()
-
-go.start_parsing()
+go.pars_js_file()
+# go.go_too_page()
+# go.swith_too_100()
+#
+# go.start_parsing()
 go.work_start()
 
-# go_git = Git()
-# go_git.git_push_with_ssh_key()
 
