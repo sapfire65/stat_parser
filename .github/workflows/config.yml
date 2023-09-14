@@ -4,7 +4,8 @@ name: Start parsing
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '5 * * * *'
+
 
 jobs:
   Go-pars:
