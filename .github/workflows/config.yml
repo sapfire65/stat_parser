@@ -1,6 +1,10 @@
 name: Start parsing
 
-on: workflow_dispatch
+on:
+
+  schedule:
+    - workflow_dispatch
+    - cron: '*/5 * * * *'
 
 jobs:
   Go-pars:
