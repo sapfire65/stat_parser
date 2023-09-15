@@ -5,12 +5,13 @@ import copy
 import pickle  #  Преобразование /восстановления - объектов Python в байтовые потоки
 import os
 import re
+from user_agent import generate_user_agent
 from datetime import datetime as DT
 from colorama import Fore, Style
 
 # import urllib.parse  #  percent-encoding - принимает закодированную строку в качестве входного аргумента и возвращает декодированную версию этой строки.
 # from time import sleep
-# from user_agent import generate_user_agent
+#
 # from selenium import webdriver
 # from selenium.webdriver.support import expected_conditions as EC
 # from selenium.webdriver.support.ui import WebDriverWait as My_DriverWait
@@ -79,7 +80,6 @@ from colorama import Fore, Style
 #     return chrome_browser
 #
 class Parsing:
-    JS_URL = 'https://miningpoolstats.stream/data/coin_list.19.min.js'
     my_list = []
 #
 #     URL = 'https://miningpoolstats.stream/#'
@@ -164,9 +164,23 @@ class Parsing:
 #         return pars_tuple
 
     def pars_js_file(self):
-        responce = requests.get(self.JS_URL).text
-        clear_text = re.findall(r'{"n":"(.*?)","s"', responce)
+        # Генерация случайного user-agent
+        ua_string = {'User-Agent': generate_user_agent(os=None, navigator=None, platform=None, device_type="desktop")}
+
+        URL = 'https://miningpoolstats.stream/newcoins'
+        DATA = 'https://data.miningpoolstats.stream/data/coins_data_new.js?t='
+
+        my_resp = requests.get(URL).text
+        clear_text = re.findall(r'last_time = "(.*?)";var', my_resp)
+        last_time = clear_text[0]
+        resoult_url = DATA + last_time
+        # print(resoult_url)
+
+        responce = requests.get(resoult_url, headers=ua_string).text
+
+        clear_text = re.findall(r'name":"(.*?)","algo', responce)
         clear_text = set(clear_text)
+
         # print(responce)
         # print(clear_text)
         # print(len(clear_text))
