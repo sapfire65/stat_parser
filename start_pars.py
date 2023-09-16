@@ -1,7 +1,6 @@
 # Welcome to my first parser :)
 # -*- coding: utf-8 -*-
 import requests
-import git
 import copy
 import pickle  #  Преобразование /восстановления - объектов Python в байтовые потоки
 import os
