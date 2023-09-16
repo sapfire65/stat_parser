@@ -24,7 +24,7 @@ jobs:
           token: ${{ secrets.CI_TOKEN }}
           repository: ${{ 'sapfire65/stat_parser' }}
           retain_days: 0
-          keep_minimum_runs: 5
+          keep_minimum_runs: 3
 
 
 
