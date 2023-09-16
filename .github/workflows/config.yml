@@ -19,3 +19,12 @@ jobs:
         run: sudo docker-compose up
 
 
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ CI_TOKEN }}
+          repository: ${{ 'https://github.com/sapfire65/stat_parser' }}
+          retain_days: 1
+          keep_minimum_runs: 5
+
+
