@@ -10,4 +10,6 @@ services:
       - ./:/usr/workspace
     command: /bin/sh -c "ls -la && python -s  start_pars.py"
     working_dir: /usr/workspace
+    environment:
+      - CI_TOKEN=${CI_TOKEN}
 
