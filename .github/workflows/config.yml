@@ -6,7 +6,9 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '30 * * * *'
-
+  push:
+    branches:
+      - main
 
 jobs:
   Go-pars:
@@ -15,7 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run-parsing
-
         run: sudo docker-compose up
 
 
@@ -26,5 +27,23 @@ jobs:
           repository: ${{ 'sapfire65/stat_parser' }}
           retain_days: 0
           keep_minimum_runs: 5
+
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          repository: sapfire65/stat_parser
+          ref: main  # Ваша ветка
+
+      - name: Push data.pickle
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git checkout main  # Убедитесь, что вы находитесь в нужной ветке
+          git add data.pickle
+          git commit -m "Update data.pickle"
+          git push https://github.com/sapfire65/stat_parser.git main
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
 
 
