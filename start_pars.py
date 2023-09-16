@@ -103,23 +103,23 @@ class Parsing:
 
 
 
-class Git:
-    def git_push_with_ssh_key(self):
-        try:
-            # Укажите путь к вашему репозиторию
-            repo_path = 'sapfire65/stat_parser/'
-            repo = git.Repo(repo_path)
-
-            # Установите переменную окружения GIT_SSH_COMMAND для указания вашего ключа SSH
-            ssh_key_path = secrets.CI_TOKEN
-            os.environ['GIT_SSH_COMMAND'] = f'ssh -i {ssh_key_path}'
-
-            # Выполняем git push
-            repo.remotes.origin.push()
-
-            print("Git push успешно выполнен с использованием SSH-ключа")
-        except Exception as e:
-            print(f"Произошла ошибка: {e}")
+# class Git:
+#     def git_push_with_ssh_key(self):
+#         try:
+#             # Укажите путь к вашему репозиторию
+#             repo_path = 'sapfire65/stat_parser/'
+#             repo = git.Repo(repo_path)
+#
+#             # Установите переменную окружения GIT_SSH_COMMAND для указания вашего ключа SSH
+#             ssh_key_path = secrets.CI_TOKEN
+#             os.environ['GIT_SSH_COMMAND'] = f'ssh -i {ssh_key_path}'
+#
+#             # Выполняем git push
+#             repo.remotes.origin.push()
+#
+#             print("Git push успешно выполнен с использованием SSH-ключа")
+#         except Exception as e:
+#             print(f"Произошла ошибка: {e}")
 
 
 go = Parsing()
