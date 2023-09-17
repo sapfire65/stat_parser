@@ -5,7 +5,6 @@ import copy
 import pickle  #  Преобразование /восстановления - объектов Python в байтовые потоки
 import os
 import re
-from user_agent import generate_user_agent
 from datetime import datetime as DT
 from colorama import Fore, Style
 from base_functions import BaseFunctions
@@ -13,44 +12,36 @@ from base_functions import BaseFunctions
 
 
 class Parsing:
-    my_list = []
-
+    URL = 'https://miningpoolstats.stream/newcoins'
+    DATA = 'https://data.miningpoolstats.stream/data/coins_data_new.js?t='
 
     def pars_js_file(self):
         reqular = BaseFunctions.reqular_findall
-        # Генерация случайного user-agent
-        ua_string = {'User-Agent': generate_user_agent(os=None, navigator=None, platform=None, device_type="desktop")}
+        request = BaseFunctions.request_and_fake_useragent
 
-        URL = 'https://miningpoolstats.stream/newcoins'
-        DATA = 'https://data.miningpoolstats.stream/data/coins_data_new.js?t='
-
-        my_resp = requests.get(URL).text
-        # clear_text = re.findall(r'last_time = "(.*?)";var', my_resp)
-        clear_text = reqular(self, text=my_resp, before_text='last_time = "', after_text='";var')
+        my_resp = requests.get(self.URL).text
+        clear_text = reqular(text=my_resp, before_text='last_time = "', after_text='";var')
         last_time = clear_text[0]
-        resoult_url = DATA + last_time
+        resoult_url = self.DATA + last_time
 
-        responce = requests.get(resoult_url, headers=ua_string).text
-        clear_text = reqular(self, responce, 'name":"', '","algo')
+        responce = request(resoult_url)
+        clear_text = reqular(responce, 'name":"', '","algo')
         clear_text = set(clear_text)
 
         return clear_text
 
     def work_start(self):
+        data_and_time = BaseFunctions.data_and_time
 
         def main():
             # Путь к файлу
             file_path = "data.pickle"
-
             # Дата и время
-            data_and_time = str(DT.now())
-            old_time = re.sub(r"\.\d+", "", data_and_time)
+            old_time = data_and_time()
 
             # Множество данных который спарсили с сайта
-            # data = self.start_parsing()
             data = self.pars_js_file()
             # data = {'Новый СУПЕР БИТКОИН'}
-
 
             new_data = [old_time, data]
             # print('>>>', new_data)
