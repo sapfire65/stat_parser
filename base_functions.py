@@ -29,6 +29,7 @@ class BaseFunctions:
 
     @staticmethod
     def data_and_time():
+        """Получает дату и текущее время. Обрезает регуляркой до нужного формата"""
         # Дата и время
         data_and_time = str(DT.now())
         return re.sub(r"\.\d+", "", data_and_time)
