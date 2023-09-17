@@ -8,6 +8,7 @@ import re
 from user_agent import generate_user_agent
 from datetime import datetime as DT
 from colorama import Fore, Style
+from base_functions import BaseFunctions
 
 
 
@@ -16,6 +17,7 @@ class Parsing:
 
 
     def pars_js_file(self):
+        reqular = BaseFunctions.reqular_findall
         # Генерация случайного user-agent
         ua_string = {'User-Agent': generate_user_agent(os=None, navigator=None, platform=None, device_type="desktop")}
 
@@ -23,12 +25,13 @@ class Parsing:
         DATA = 'https://data.miningpoolstats.stream/data/coins_data_new.js?t='
 
         my_resp = requests.get(URL).text
-        clear_text = re.findall(r'last_time = "(.*?)";var', my_resp)
+        # clear_text = re.findall(r'last_time = "(.*?)";var', my_resp)
+        clear_text = reqular(self, text=my_resp, before_text='last_time = "', after_text='";var')
         last_time = clear_text[0]
         resoult_url = DATA + last_time
 
         responce = requests.get(resoult_url, headers=ua_string).text
-        clear_text = re.findall(r'name":"(.*?)","algo', responce)
+        clear_text = reqular(self, responce, 'name":"', '","algo')
         clear_text = set(clear_text)
 
         return clear_text
