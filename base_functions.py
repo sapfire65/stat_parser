@@ -35,4 +35,19 @@ class BaseFunctions:
         return re.sub(r"\.\d+", "", data_and_time)
 
 
+    @staticmethod
+    def check_ip():
+        url = 'http://ip-api.com/line'
+        self_ip =  BaseFunctions.request_and_fake_useragent(url)
+
+        self_ip = str(self_ip)
+        text = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', self_ip)
+        text = str(text[0])
+        print(f'\nIP: {text}\n')
+        return text
+
+
+
+
+
 

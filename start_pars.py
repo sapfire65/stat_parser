@@ -1,14 +1,10 @@
 # Welcome to my first parser :)
 # -*- coding: utf-8 -*-
-import requests
 import copy
 import pickle  #  Преобразование /восстановления - объектов Python в байтовые потоки
 import os
-import re
-from datetime import datetime as DT
 from colorama import Fore, Style
 from base_functions import BaseFunctions
-
 
 
 class Parsing:
@@ -18,16 +14,13 @@ class Parsing:
     def pars_js_file(self):
         reqular = BaseFunctions.reqular_findall
         request = BaseFunctions.request_and_fake_useragent
-
-        my_resp = requests.get(self.URL).text
-        clear_text = reqular(text=my_resp, before_text='last_time = "', after_text='";var')
+        my_resp = request(self.URL)
+        clear_text = reqular(my_resp, 'last_time = "', '";var')
         last_time = clear_text[0]
         resoult_url = self.DATA + last_time
-
         responce = request(resoult_url)
         clear_text = reqular(responce, 'name":"', '","algo')
         clear_text = set(clear_text)
-
         return clear_text
 
     def work_start(self):
@@ -45,7 +38,6 @@ class Parsing:
 
             new_data = [old_time, data]
             # print('>>>', new_data)
-
 
             # Логика. Проверяем наличие файла с данными data.pickle
             if 'data.pickle'not in os.listdir():
@@ -91,7 +83,6 @@ class Parsing:
                 data_new = pickle.load(f)
                 return data_new
 
-
         main()
 
 
@@ -116,7 +107,10 @@ class Parsing:
 
 
 go = Parsing()
+ip = BaseFunctions()
+
 go.pars_js_file()
 go.work_start()
+ip.check_ip()
 
 
